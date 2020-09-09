@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    <param name = "rotors_description" textfile="$(find pbr_gazebo)/models/simple_box/model.urdf"/>
+
+    <node name = "spawn_robot" pkg = "gazebo_ros" type = "spawn_model" args="-file $(find pbr_gazebo)/models/simple_box/model.urdf -urdf -model simple_box"/>
+</launch>
