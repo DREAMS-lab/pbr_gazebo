@@ -1,0 +1,14 @@
+material simple_terrain
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture terrain.jpg
+        scale 1 1
+      }
+    }
+  }
+}

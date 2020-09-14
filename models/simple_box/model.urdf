@@ -1,4 +1,4 @@
-<robot name="test_model">
+<robot name="simple_box">
 
   <!-- root link, on the ground just below the model origin -->
   <link name="base_footprint">
@@ -21,24 +21,35 @@
     <inertial>
       <mass value="10" />
       <origin xyz="0 0 -1.0" />
-      <inertia ixx="83.3" ixy="0.0" ixz="0.0"
-        iyy="83.3" iyz="0.0"
-        izz="166.6" /> <!--Ixx = 1/12/m*(y^2+z^2)-->
+      <inertia ixx="5" ixy="0.0" ixz="0.0"
+        iyy="5" iyz="0.0"
+        izz="10" /> <!--Ixx = 1/12/m*(y^2+z^2)-->
     </inertial>
     <visual>
       <origin xyz="0 0 -1.0" />
       <geometry>
-        <box size="100 100 0.1" />
+        <box size="10 10 0.1" />
       </geometry>
-
     </visual>
     <collision>
       <origin xyz="0 0 -1.0" />
       <geometry>
         <box size="10 10 0.1" />
       </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.6</mu>
+            <mu2>0.6</mu2>
+          </ode>
+        </friction>
+      </surface>
     </collision>
   </link>
+
+<gazebo reference="base_link">
+    <material>simple_terrain</material>
+</gazebo>
 
   <gazebo>
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
@@ -49,5 +60,6 @@
       <robotBaseFrame>base_footprint</robotBaseFrame>
     </plugin>
   </gazebo>
-
 </robot>
+
+
