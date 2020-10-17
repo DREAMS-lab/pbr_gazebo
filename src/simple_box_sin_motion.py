@@ -14,11 +14,11 @@ if __name__ == '__main__':
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
     HZ = 30
     rate = rospy.Rate(HZ)  # controller publishing rate
-    A = 8  # amplitude (meters)
-    T = 0.5  # period (seconds). note this distinguishes from controller publishing rate
+    A = 0.5  # amplitude (meters)
+    T = 0.8  # period (seconds). note this distinguishes from controller publishing rate
     t = 0  # initial horizon
     step = 1./HZ*(2*np.pi)/T
-    for _ in range(int(HZ*T)*4):
+    for _ in range(int(HZ*T)*1):
         x = A*np.sin(t)
         vel = Twist()
         vel.linear.x = x

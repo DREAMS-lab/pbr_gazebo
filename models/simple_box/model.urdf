@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <robot name="simple_box">
 
   <!-- root link, on the ground just below the model origin -->
