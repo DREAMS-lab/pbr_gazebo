@@ -14,9 +14,9 @@ if __name__ == "__main__":
         set_force_client = rospy.ServiceProxy('/gazebo/apply_joint_effort', ApplyJointEffort)
         force = ApplyJointEffortRequest()
         force.joint_name = 'box_joint'
-        force.effort = 2000
-        force.duration.set(2, 0)
+        force.effort = -20000
+        force.duration.set(1.5, 0)
         set_force_client(force)
-
+        print('done')
     except rospy.ServiceException as e:
         print("Service call failed: %s" % e)

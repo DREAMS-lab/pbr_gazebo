@@ -117,11 +117,18 @@
 					<mu2>0.6</mu2>
 				  </ode>
 				</friction>
+				<contact>
+					<ode>
+						<min_depth>0.003</min_depth>
+					</ode>
+				</contact>
 			</surface>
 		</collision>
 	</link>
 	<gazebo reference="box">
 		<material>simple_terrain</material>
+		<mu1>0.6</mu1>
+		<mu2>0.6</mu2>
 	</gazebo>
 
 	<joint name="box_joint" type="prismatic">

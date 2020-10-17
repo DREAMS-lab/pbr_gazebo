@@ -1,0 +1,42 @@
+<robot name="friction_test_object">
+
+    <link name="friction_base_link"/>
+
+    <link name="friction_test_object_link">
+        <!-- Inertial for gazebo to take it into account, Put 1gr weight -->
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1.0" />
+            <inertia ixx="0.00666666666667" ixy="0.0" ixz="0.0" iyy="0.00666666666667" iyz="0.0" izz="0.00666666666667"/>
+        </inertial>
+		<visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.2 0.2"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.2 0.2"/>
+            </geometry>
+        </collision>
+	</link>
+
+    <joint name="friction_base_link_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="friction_base_link" />
+        <child link="friction_test_object_link" />
+    </joint>
+
+
+    <gazebo reference="friction_test_object_link">
+        <kp>10000.0</kp>
+        <kd>10000.0</kd>
+        <mu1>1000.0</mu1>
+        <mu2>1000.0</mu2>
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+
+</robot>
