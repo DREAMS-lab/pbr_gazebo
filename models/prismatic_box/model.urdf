@@ -129,6 +129,8 @@
 		<material>simple_terrain</material>
 		<mu1>0.6</mu1>
 		<mu2>0.6</mu2>
+		<minDepth>0.01</minDepth>
+		<maxContacts>10</maxContacts>
 	</gazebo>
 
 	<joint name="box_joint" type="prismatic">
