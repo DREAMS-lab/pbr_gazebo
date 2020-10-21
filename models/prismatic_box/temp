@@ -1,8 +1,8 @@
 	<link name="box">
 		<inertial>
-			<mass value="10" />
+			<mass value="10000" />
 			<origin xyz="0 0 0" />
-			<inertia ixx="5" ixy="0.0" ixz="0.0" iyy="5" iyz="0.0" izz="10" /> 
+			<inertia ixx="83541" ixy="0.0" ixz="0.0" iyy="83541" iyz="0.0" izz="166666" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
 		</inertial>
 
@@ -25,16 +25,39 @@
 					<mu2>0.6</mu2>
 				  </ode>
 				</friction>
+				<contact>
+					<ode>
+						<min_depth>0.003</min_depth>
+					</ode>
+				</contact>
 			</surface>
 		</collision>
 	</link>
 	<gazebo reference="box">
 		<material>simple_terrain</material>
+		<mu1>0.59</mu1>
+		<mu2>0.6</mu2>
+		<minDepth>0.0001</minDepth>
+		<maxContacts>10</maxContacts>
 	</gazebo>
 
-	<joint name="box_joint" type="fixed">
+	<joint name="box_joint" type="prismatic">
 		<origin xyz="0 0 0.3" rpy="0 0 0" />
-		<parent link="prismatic_box"/>
+		<parent link="slide_box"/>
 		<child link="box" />
+        <xis xyz = "1 0 0"/>
+		<limit effort="1000000" lower="-4" upper="4" velocity="20" />
 	</joint>
 
+	
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="box_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>

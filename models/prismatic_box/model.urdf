@@ -13,13 +13,13 @@
 	<link name="world_box">
 		<inertial>
 			<mass value="50000" />
-			<origin xyz="0 0 0" />
+			<origin xyz="0 0 0.0" />
 			<inertia ixx="833333" ixy="0.0" ixz="0.0" iyy="1366666" iyz="0.0" izz="2166666" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
 		</inertial>
 
 		<visual>
-			<origin xyz="0 0 0" />
+			<origin xyz="0 0 0"  />
 			<geometry>
 				<box size="18 14 2" />
 			</geometry>
@@ -50,7 +50,7 @@
 		<child link="world_box" />
 	</joint>
 
-	<link name="prismatic_box">
+	<link name="slide_box">
 		<inertial>
 			<mass value="10000" />
 			<origin xyz="0 0 0" />
@@ -80,14 +80,14 @@
 			</surface-->
 		</collision>
 	</link>	
-	<gazebo reference="prismatic_box">
+	<gazebo reference="slide_box">
 		<material>Gazebo/Blue</material>
 	</gazebo>
 
-	<joint name="prismatic_box_joint" type="fixed">
+	<joint name="slide_box_joint" type="fixed">
 		<origin xyz="0 0 1.25" rpy="0 0 0" />
 		<parent link="world_box"/>
-		<child link="prismatic_box" />
+		<child link="slide_box" />
 	</joint>
 
 	<link name="box">
@@ -127,15 +127,15 @@
 	</link>
 	<gazebo reference="box">
 		<material>simple_terrain</material>
-		<mu1>0.6</mu1>
+		<mu1>0.59</mu1>
 		<mu2>0.6</mu2>
-		<minDepth>0.01</minDepth>
+		<minDepth>0.0001</minDepth>
 		<maxContacts>10</maxContacts>
 	</gazebo>
 
 	<joint name="box_joint" type="prismatic">
 		<origin xyz="0 0 0.3" rpy="0 0 0" />
-		<parent link="prismatic_box"/>
+		<parent link="slide_box"/>
 		<child link="box" />
         <xis xyz = "1 0 0"/>
 		<limit effort="1000000" lower="-4" upper="4" velocity="20" />
