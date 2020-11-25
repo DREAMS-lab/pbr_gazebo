@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="prismatic_box">
+	
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/prismatic_box_controller</robotNamespace>
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+			<legacyModeNS>true</legacyModeNS>
+		</plugin>
+	</gazebo>
+
+	<link name="world"/>
+
+	<link name="world_box">
+		<inertial>
+			<mass value="50000" />
+			<origin xyz="0 0 0.0" />
+			<inertia ixx="833333" ixy="0.0" ixz="0.0" iyy="1366666" iyz="0.0" izz="2166666" /> 
+			<!--Ixx = 1/12/m*(y^2+z^2)-->
+		</inertial>
+
+		<visual>
+			<origin xyz="0 0 0"  />
+			<geometry>
+				<box size="18 14 2" />
+			</geometry>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" />
+			<geometry>
+				<box size="18 14 2" />
+			</geometry>
+			<!--surface>
+				<friction>
+				  <ode>
+					<mu>0.0</mu>
+					<mu2>0.0</mu2>
+				  </ode>
+				</friction>
+			</surface-->
+		</collision>
+	</link>	
+	<gazebo reference="world_box">
+		<material>Gazebo/Gray</material>
+	</gazebo>
+
+	<joint name="world_box_joint" type="fixed">
+		<origin xyz="0 0 1.0" rpy="0 0 0" />
+		<parent link="world"/>
+		<child link="world_box" />
+	</joint>
+
+	<link name="slide_box">
+		<inertial>
+			<mass value="10000" />
+			<origin xyz="0 0 0" />
+			<inertia ixx="120208" ixy="0.0" ixz="0.0" iyy="270208" iyz="0.0" izz="390000" /> 
+			<!--Ixx = 1/12/m*(y^2+z^2)-->
+		</inertial>
+
+		<visual>
+			<origin xyz="0 0 0" />
+			<geometry>
+				<box size="18 12 0.5" />
+			</geometry>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" />
+			<geometry>
+				<box size="18 12 0.5" />
+			</geometry>
+			<!--surface>
+				<friction>
+				  <ode>
+					<mu>0.0</mu>
+					<mu2>0.0</mu2>
+				  </ode>
+				</friction>
+			</surface-->
+		</collision>
+	</link>	
+	<gazebo reference="slide_box">
+		<material>Gazebo/Blue</material>
+	</gazebo>
+
+	<joint name="slide_box_joint" type="fixed">
+		<origin xyz="0 0 1.25" rpy="0 0 0" />
+		<parent link="world_box"/>
+		<child link="slide_box" />
+	</joint>
+
+	<link name="box">
+        <inertial>
+			<mass value="6400000" />
+			<origin xyz="0 0 0" />
+			<inertia ixx="3466666666" ixy="0.0" ixz="0.0" iyy="3466666666" iyz="0.0" izz="6826666666" /> 
+			<!--Ixx = 1/12/m*(y^2+z^2)-->
+        </inertial>
+
+		<visual name='visual'>
+          <geometry>
+            <!--mesh>
+              <uri>model://granite_dell_terrain/pbr-less-1.dae</uri>
+            </mesh-->
+			<mesh filename="package://gazebo_sim_models/models/granite_dell_terrain/pbr-less-1.dae"/>
+          </geometry>
+        </visual>
+
+        <collision name='collision'>
+          <geometry>
+            <mesh filename="package://gazebo_sim_models/models/granite_dell_terrain/pbr-less-1.dae"/>
+          </geometry>
+        </collision>
+	</link>
+
+	<gazebo reference="box">
+		<material>simple_terrain</material>
+		<mu1>0.6</mu1>
+		<mu2>0.6</mu2>
+		<minDepth>0.0001</minDepth>
+		<maxContacts>10</maxContacts>
+	</gazebo>
+
+	<joint name="box_joint" type="prismatic">
+		<origin xyz="0 0 2" rpy="0 0 0" />
+		<parent link="slide_box"/>
+		<child link="box" />
+        <xis xyz = "1 0 0"/>
+		<limit effort="100000000" lower="-4" upper="4" velocity="20" />
+	</joint>
+
+	
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="box_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+</robot>
+
+
