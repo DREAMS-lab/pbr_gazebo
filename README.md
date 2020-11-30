@@ -13,6 +13,7 @@ export GAZEBO_MODEL_PATH=~/catkin_ws/src/pbr_gazebo/models${GAZEBO_MODEL_PATH:+:
 
 ## Simulation
 ### Simple Shaking Table
+[![Video](./doc/simple_shaking_table.png)](https://www.youtube.com/watch?v=8tYpVeeXM_s&t=10s)
 ```
 roslaunch pbr_gazebo prismatic_box.launch
 rosrun pbr_gazebo pulse_motion_server.py
@@ -37,6 +38,7 @@ To tune the PID parameters, [prismatic_box_controller.yaml](https://github.com/D
 
 
 ### Granite Dell
+[![Video](./doc/granite_dell.png)](https://www.youtube.com/watch?v=9lwKEj10frs)
 ```
 roslaunch pbr_gazebo granite_dell.launch
 roslaunch pbr_gazebo prismatic_controller.launch
