@@ -12,8 +12,8 @@
         <!--arg name="urdf_robot_file" default="$(find pbr_gazebo)/models/rock_models/friction_test_object/friction_test_object.urdf" /-->
 		<!--arg name="robot_name" default="friction_test_object" /-->
 		
-		<arg name="urdf_robot_file" default="$(find pbr_gazebo)/models/rock_models/rock_box_1_1_1/model.sdf" />
-		<arg name="robot_name" default="rock_box_1_1_1" />
+		<arg name="urdf_robot_file" default="$(find pbr_gazebo)/models/rock_models/rock_box_1_1_2/model.sdf" />
+		<arg name="robot_name" default="rock_box_1_1_2" />
         
 
         <!-- This Version was created due to some errors seen in the V1 that crashed GAzebo or went too slow in spawn -->

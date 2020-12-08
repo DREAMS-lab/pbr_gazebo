@@ -16,6 +16,7 @@ from numpy import pi, sin
 
 class PulseMotion(object):
     def __init__(self, action_name='pulse_motion_server'):
+        self.default_vel = 0.0
         # joint state subscriber
         self.x = 0
         rospy.Subscriber("/prismatic_box_controller/joint_states", JointState, self.jointstate_cb)
@@ -23,7 +24,7 @@ class PulseMotion(object):
         # velocity controller
         self.Hz = 50
         self.vel_pub = rospy.Publisher('/prismatic_box_controller/prismatic_joint_controller/command', Float64, queue_size=10)
-        self.vel_command = 0
+        self.vel_command = self.default_vel
         self.vel_thread = Thread(target=self.send_vel, args=())
         self.vel_thread.daemon = True
         self.vel_thread.start()
@@ -54,7 +55,7 @@ class PulseMotion(object):
                 rate.sleep()
                 err = - self.x
                 errs.append(err)
-            self.vel_command = 0
+            self.vel_command = self.default_vel
             self._result.success = True
             self._as.set_succeeded(self._result)
             rospy.loginfo('reset completed')
@@ -70,15 +71,15 @@ class PulseMotion(object):
             for j in range(step_nm):
                 t = j*(1./self.Hz)
                 self.vel_command = 2*pi*A*F*sin(2*pi*F*t)
-                print('t', t)
-                print('F', F)
-                print('A', A)
-                print(2*pi*t/F)
-                print(self.vel_command)
-                print('-')
+                # print('t', t)
+                # print('F', F)
+                # print('A', A)
+                # print(2*pi*t/F)
+                # print(self.vel_command)
+                # print('-')
                 rate.sleep()
 
-            self.vel_command = 0
+            self.vel_command = self.default_vel
             self._result.success = True
             self._as.set_succeeded(self._result)
             rospy.loginfo('pulse motion completed')

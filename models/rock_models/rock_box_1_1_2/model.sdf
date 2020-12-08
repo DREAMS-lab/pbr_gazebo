@@ -1,16 +1,16 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-  <model name='rock_box_1_1_1'>
+  <model name='rock_box_1_1_2'>
     <link name='link'>
       <inertial>
-        <mass>2700</mass>
+        <mass>5400</mass>
         <inertia>
-          <ixx>450</ixx>
+          <ixx>2250</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>450</iyy>
+          <iyy>2250</iyy>
           <iyz>0</iyz>
-          <izz>450</izz>
+          <izz>900</izz>
         </inertia>
         <pose frame=''>0 0 0 0 -0 0</pose>
       </inertial>
@@ -22,7 +22,7 @@
       <visual name='visual'>
         <geometry>
           <box>
-            <size>1 1 1</size>
+            <size>1 1 2</size>
           </box>
         </geometry>
         <material>
@@ -44,7 +44,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>1 1 1</size>
+            <size>1 1 2</size>
           </box>
         </geometry>
         <surface>
@@ -80,7 +80,7 @@
               <kp>1e+13</kp>
               <kd>1</kd>
               <max_vel>0.01</max_vel>
-              <min_depth>0.001</min_depth>
+              <min_depth>0.000</min_depth>
             </ode>
             <bullet>
               <split_impulse>1</split_impulse>
