@@ -12,7 +12,7 @@ export GAZEBO_MODEL_PATH=~/catkin_ws/src/pbr_gazebo/models${GAZEBO_MODEL_PATH:+:
 2. [granite_dell.zip](https://download.openuas.us/granite_dell.zip)
 
 ## Simulation
-### Simple Shaking Table
+### Simple Shake Table
 [![Video](./doc/simple_shaking_table.png)](https://www.youtube.com/watch?v=8tYpVeeXM_s&t=10s)
 ```
 roslaunch pbr_gazebo prismatic_box.launch
