@@ -49,6 +49,15 @@ You might need to wait until `granite_dell` is fully launched in gazebo to launc
 
 To tune the PID parameters, [prismatic_controller_granite_dell.yaml](https://github.com/DREAMS-lab/pbr_gazebo/blob/master/config/prismatic_controller_granite_dell.yaml)
 
+### PBRs and Boxes
+PBR and box models can be loaded after the environment has been loaded in Gazebo
+```
+roslaunch pbr_gazebo add_pbr.launch
+roslaunch pbr_gazebo add_box.launch
+```
+There are [box models with different dimensions](https://github.com/DREAMS-lab/pbr_gazebo/tree/master/models/rock_models). They can be specified in `add_box.launch` file to be loaded.
+
+
 ## PBR Parameters
 1. coefficient of friction: 0.6  
 2. terrain motion (DoF): 3 DoF  
