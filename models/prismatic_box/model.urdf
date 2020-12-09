@@ -117,6 +117,11 @@
 					<mu>0.6</mu>
 					<mu2>0.6</mu2>
 				  </ode>
+				  <bullet>
+					<friction>0.6</friction>
+					<friction2>0.6</friction2>
+					<rolling_friction>0.6</rolling_friction>
+				  </bullet>
 				</friction>
 				<contact>
 					<ode>
