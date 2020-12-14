@@ -57,14 +57,3 @@ roslaunch pbr_gazebo add_box.launch
 ```
 There are [box models with different dimensions](https://github.com/DREAMS-lab/pbr_gazebo/tree/master/models/rock_models). They can be specified in `add_box.launch` file to be loaded.
 
-
-## PBR Parameters
-1. coefficient of friction: 0.6  
-2. terrain motion (DoF): 3 DoF  
-3. amplitude and frequency: 
-    - acceleration 1~1.5 g, 1g (+); 
-    - single stroke;
-    - displacement 1m;
-    - velocity 2m/s; (-)
-4. density: 2700 kg/m^3  
-5. Elasticity (--)
