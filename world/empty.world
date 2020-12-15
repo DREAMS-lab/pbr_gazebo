@@ -10,7 +10,7 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <physics name='default_physics' default='0' type='ode'>
+    <physics name='default_physics' type='bullet'>
       <gravity>0 0 -9.8066</gravity>
       <ode>
         <solver>
@@ -26,10 +26,18 @@
           <contact_surface_layer>0.001</contact_surface_layer>
         </constraints>
       </ode>
-      <max_step_size>0.004</max_step_size>
+	  <bullet>
+        <solver>
+          <type>sequential_impulse</type>
+          <iters>100</iters>
+          <sor>1.0</sor>
+        </solver>
+	  </bullet>
+      <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
       <magnetic_field>6.0e-6 2.3e-5 -4.2e-5</magnetic_field>
+ 	  <max_contacts>40</max_contacts>
     </physics>
   </world>
 </sdf>
