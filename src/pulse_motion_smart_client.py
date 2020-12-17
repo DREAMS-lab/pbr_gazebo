@@ -1,4 +1,8 @@
 #! /usr/bin/env python
+"""
+pulse_motion_smart_client.py
+Zhiang Chen, Dec 2020
+"""
 from __future__ import print_function
 import rospy
 import actionlib

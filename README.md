@@ -57,3 +57,16 @@ roslaunch pbr_gazebo add_box.launch
 ```
 There are [box models with different dimensions](https://github.com/DREAMS-lab/pbr_gazebo/tree/master/models/rock_models). They can be specified in `add_box.launch` file to be loaded.
 
+## Pulse Motion
+The pulse motion is deployed by a cosine function: <img src="https://render.githubusercontent.com/render/math?math=d = A-Acos(2\pi F t)">. It is conducted by a ros action server, [pulse_motion_server.py](https://github.com/DREAMS-lab/pbr_gazebo/blob/master/src/pulse_motion_server.py). To send the motion commands, two action clients are supported. 
+1. [pulse_motion_client.py](https://github.com/DREAMS-lab/pbr_gazebo/blob/master/src/pulse_motion_client.py): Single pulse motion. Two arguments are required for pulse_motion_client.py. The first one is the amplitude of displacement, A; the second one is the fruquence of displacement, F. e.g. `rosrun pbr_gazebo pulse_motion_client.py 1 2`.
+2. [pulse_motion_smart_client.py](https://github.com/DREAMS-lab/pbr_gazebo/blob/master/src/pulse_motion_smart_client.py): Repeated pulse-motion experiments. It needs the lists of displacement amplitudes and frequences defined in the python file. Then it will repeat the experiment of loading PBR, triggering single pulse motion, deleting PBR, and resetting shake table. The following video shows that the experiments are automatically repeated in the simulation. 
+
+[![Video](./doc/smart_client.png)](https://www.youtube.com/watch?v=XEWoWZ7U458)
+
+```
+roslaunch pbr_gazebo prismatic_box.launch
+rosrun pbr_gazebo pulse_motion_server.py
+rosrun pbr_gazebo pulse_motion_smart_client.py
+```
+The lists of displacement amplitudes and frequences need to be defined in pulse_motion_smart_client.py.
