@@ -13,6 +13,9 @@ from gazebo_msgs.srv import DeleteModel, SpawnModel
 import rospkg
 from geometry_msgs.msg import Point, Pose, Twist
 import numpy as np
+import tf
+from numpy import pi
+import matplotlib.pyplot as plt
 
 class SmartClient(object):
     def __init__(self):
@@ -51,9 +54,15 @@ class SmartClient(object):
 
         rospy.loginfo('pluse_motion_smart_client has been initialized')
 
+        plt.axis([0, 3, 0, 2])
+        self.toppling_data = []
+
         rospy.loginfo('Start simulation!')
-        As = np.linspace(0.2, 1.5, 20)
-        Fs = np.linspace(0.2, 1, 10)
+        As = np.linspace(0.1, 0.5, 20)
+        Fs = np.linspace(0.1, 1, 20)
+        r = self.getRange(As, Fs)
+        rospy.loginfo("Maximum PGV/PGA: " + str(r[0]))
+        rospy.loginfo("Maximum PGA: " + str(r[2]))
         for A in As:
             for F in Fs:
                 # load model
@@ -85,12 +94,56 @@ class SmartClient(object):
                 result = self.client.get_result()
                 rospy.sleep(2.)
 
+                state = self.checkToppled()
+                self.logData(A, F, state)
+        nd_data = np.asarray(self.toppling_data)
+        np.savetxt("toppling_data.csv", nd_data, delimiter=",")
+
+
     def callback(self, data):
         model_name = 'rock_box_1_1_2'
         if model_name in data.name:
             idx = data.name.index('rock_box_1_1_2')
             self.pbr_pose = data.pose[idx]
             self.pbr_twist = data.twist[idx]
+
+    def checkToppled(self):
+        q = self.pbr_pose.orientation
+        r, p, y = tf.transformations.euler_from_quaternion((q.x, q.y, q.z, q.w))
+        if (abs(r) + abs(r)) < 0.1:
+            return False
+        else:
+            return True
+
+    def logData(self, A, F, state):
+        PGV = 2*pi*A*F
+        PGA = 4*pi**2*F**2*A
+        PGV_2_PGA = PGV/PGA
+        PGA_g = PGA/9.807
+        if state:
+            # toppled
+            plt.scatter(PGV_2_PGA, PGA_g, c='r')
+            self.toppling_data.append((PGV_2_PGA, PGA_g, 1))
+        else:
+            plt.scatter(PGV_2_PGA, PGA_g, c='b', marker="v")
+            self.toppling_data.append((PGV_2_PGA, PGA_g, 0))
+        plt.pause(0.05)
+
+
+    def getRange(self, As, Fs):
+        data = []
+        for A in As:
+            for F in Fs:
+                PGV = 2 * pi * A * F
+                PGA = 4 * pi ** 2 * F ** 2 * A
+                PGV_2_PGA = PGV / PGA
+                PGA_g = PGA / 9.807
+                data.append((PGV_2_PGA, PGA_g))
+
+        nd = np.asarray(data)
+        return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
+
+
 
 
 if __name__ == '__main__':
