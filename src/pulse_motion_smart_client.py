@@ -59,10 +59,11 @@ class SmartClient(object):
 
         rospy.loginfo('Start simulation!')
         As = np.linspace(0.1, 0.5, 20)
-        Fs = np.linspace(0.1, 1, 20)
+        Fs = np.linspace(0.1, 1.5, 20)
         r = self.getRange(As, Fs)
-        rospy.loginfo("Maximum PGV/PGA: " + str(r[0]))
-        rospy.loginfo("Maximum PGA: " + str(r[2]))
+        print(r)
+        rospy.loginfo("Maximum PGA: " + str(r[0]))
+        rospy.loginfo("Maximum PGV/PGA: " + str(r[2]))
         for A in As:
             for F in Fs:
                 # load model
@@ -122,11 +123,11 @@ class SmartClient(object):
         PGA_g = PGA/9.807
         if state:
             # toppled
-            plt.scatter(PGV_2_PGA, PGA_g, c='r')
-            self.toppling_data.append((PGV_2_PGA, PGA_g, 1))
+            plt.scatter(PGA_g, PGV_2_PGA, c='r')
+            self.toppling_data.append((PGA_g, PGV_2_PGA, 1))
         else:
-            plt.scatter(PGV_2_PGA, PGA_g, c='b', marker="v")
-            self.toppling_data.append((PGV_2_PGA, PGA_g, 0))
+            plt.scatter(PGA_g, PGV_2_PGA, c='b', marker="v")
+            self.toppling_data.append((PGA_g, PGV_2_PGA, 0))
         plt.pause(0.05)
 
 
@@ -138,7 +139,7 @@ class SmartClient(object):
                 PGA = 4 * pi ** 2 * F ** 2 * A
                 PGV_2_PGA = PGV / PGA
                 PGA_g = PGA / 9.807
-                data.append((PGV_2_PGA, PGA_g))
+                data.append((PGA_g, PGV_2_PGA))
 
         nd = np.asarray(data)
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
