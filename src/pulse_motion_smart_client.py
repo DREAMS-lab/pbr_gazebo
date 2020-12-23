@@ -108,7 +108,7 @@ class SmartClient(object):
         rospy.sleep(2.)
 
         # delete model
-        self.delete_client('rock_box_1_1_2')
+        #self.delete_client('rock_box_1_1_2')
 
         # reset shake table
         goal = pbr_gazebo.msg.AFGoal(A=0, F=0)
@@ -116,6 +116,9 @@ class SmartClient(object):
         self.client.wait_for_result()
         result = self.client.get_result()
         rospy.sleep(2.)
+        
+        # delete model
+        self.delete_client('rock_box_1_1_2')
 
         state = self.checkToppled()
         self.logData(A, F, state)
@@ -123,7 +126,8 @@ class SmartClient(object):
     def checkToppled(self):
         q = self.pbr_pose.orientation
         r, p, y = tf.transformations.euler_from_quaternion((q.x, q.y, q.z, q.w))
-        if (abs(r) + abs(r)) < 0.1:
+        #print(r,p,y)
+        if (abs(r) + abs(p)) < 0.1:
             return False
         else:
             return True
@@ -157,8 +161,8 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGV_2_PGA = np.linspace(0.05, 1., 4)
-        PGA = np.linspace(0.05, 1., 4)
+        PGV_2_PGA = np.linspace(0.05, 1., 50)
+        PGA = np.linspace(0.05, 1.1, 50)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
         for F in Fs:
