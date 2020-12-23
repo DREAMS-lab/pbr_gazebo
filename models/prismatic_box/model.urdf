@@ -13,23 +13,23 @@
 
 	<link name="world_box">
 		<inertial>
-			<mass value="50000" />
+			<mass value="5000000" />
 			<origin xyz="0 0 0.0" />
-			<inertia ixx="833333" ixy="0.0" ixz="0.0" iyy="1366666" iyz="0.0" izz="2166666" /> 
+			<inertia ixx="83333333" ixy="0.0" ixz="0.0" iyy="1043333333" iyz="0.0" izz="1123333333" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
 		</inertial>
 
 		<visual>
 			<origin xyz="0 0 0"  />
 			<geometry>
-				<box size="18 14 2" />
+				<box size="50 14 2" />
 			</geometry>
 		</visual>
 
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<box size="18 14 2" />
+				<box size="50 14 2" />
 			</geometry>
 			<!--surface>
 				<friction>
@@ -53,23 +53,23 @@
 
 	<link name="slide_box">
 		<inertial>
-			<mass value="10000" />
+			<mass value="500000" />
 			<origin xyz="0 0 0" />
-			<inertia ixx="120208" ixy="0.0" ixz="0.0" iyy="270208" iyz="0.0" izz="390000" /> 
+			<inertia ixx="6010416" ixy="0.0" ixz="0.0" iyy="104177083" iyz="0.0" izz="110166666" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
 		</inertial>
 
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<box size="18 12 0.5" />
+				<box size="50 12 0.5" />
 			</geometry>
 		</visual>
 
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<box size="18 12 0.5" />
+				<box size="50 12 0.5" />
 			</geometry>
 			<!--surface>
 				<friction>
@@ -148,7 +148,7 @@
 		<parent link="slide_box"/>
 		<child link="box" />
         <xis xyz = "1 0 0"/>
-		<limit effort="1000000" lower="-4" upper="4" velocity="20" />
+		<limit effort="10000000" lower="-25" upper="25" velocity="200" />
 	</joint>
 
 	
