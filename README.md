@@ -70,3 +70,6 @@ rosrun pbr_gazebo pulse_motion_server.py
 rosrun pbr_gazebo pulse_motion_smart_client.py
 ```
 The lists of displacement amplitudes and frequences need to be defined in pulse_motion_smart_client.py.
+
+---
+More interesting videos can be found on our [Youtube playlist](https://www.youtube.com/playlist?list=PLQFQ6M344AWcVceGyqwvHDmvLtTxphPdQ)
