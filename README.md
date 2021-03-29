@@ -49,6 +49,15 @@ You might need to wait until `granite_dell` is fully launched in gazebo to launc
 
 To tune the PID parameters, [prismatic_controller_granite_dell.yaml](https://github.com/DREAMS-lab/pbr_gazebo/blob/master/config/prismatic_controller_granite_dell.yaml)
 
+### Double Rock
+[![Video](./doc/double_rock.png)](https://www.youtube.com/watch?v=A3oJDmryM5A)
+
+```
+roslaunch pbr_gazebo double_rock.launch
+rosrun pbr_gazebo pulse_motion_server.py
+rosrun pbr_gazebo pulse_motion_client.py 1 2
+```
+
 ### PBRs and Boxes
 PBR and box models can be loaded after the environment has been loaded in Gazebo
 ```
