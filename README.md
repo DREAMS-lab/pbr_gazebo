@@ -58,6 +58,14 @@ rosrun pbr_gazebo pulse_motion_server.py
 rosrun pbr_gazebo pulse_motion_client.py 1 2
 ```
 
+### Double Rock PBR
+![double rock pbr](./doc/double_rock_pbr.png)
+```buildoutcfg
+roslaunch pbr_gazebo prismatic_large_box.launch
+roslaunch pbr_gazebo add_double_rock_pbr_2.launch
+rosrun pbr_gazebo pulse_motion_server.py
+```
+
 ### PBRs and Boxes
 PBR and box models can be loaded after the environment has been loaded in Gazebo
 ```

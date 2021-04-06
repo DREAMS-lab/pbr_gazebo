@@ -93,9 +93,9 @@
 
 	<link name="box">
         <inertial>
-			<mass value="15000" />
+			<mass value="10000" />
 			<origin xyz="0 0 0" />
-			<inertia ixx="250000" ixy="0.0" ixz="0.0" iyy="1250000" iyz="0.0" izz="1250000" /> 
+			<inertia ixx="166666.66666667" ixy="0.0" ixz="0.0" iyy="166666.66666667" iyz="0.0" izz="166666.66666667" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
         </inertial>
 
@@ -104,7 +104,7 @@
             <!--mesh>
               <uri>model://granite_dell_terrain/pbr-less-1.dae</uri>
             </mesh-->
-			<mesh filename="package://gazebo_sim_models/models/prism/prism.dae"/>
+			<mesh filename="package://gazebo_sim_models/models/cube/cube.dae"/>
           </geometry>
         </visual>
 
@@ -133,7 +133,7 @@
           		</bounce>
 		  </surface>
           <geometry>
-            <mesh filename="package://gazebo_sim_models/models/prism/prism.dae"/>
+            <mesh filename="package://gazebo_sim_models/models/cube/cube.dae"/>
           </geometry>
         </collision>
 	</link>
