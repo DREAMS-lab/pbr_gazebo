@@ -89,4 +89,14 @@ rosrun pbr_gazebo pulse_motion_smart_client.py
 The lists of displacement amplitudes and frequences need to be defined in pulse_motion_smart_client.py.
 
 ---
+## Install Motion Controller
+```
+apt-get update && apt-get upgrade
+apt-get install ros-kinetic-ros-control
+apt-get install ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control
+apt-get install ros-kinetic-joint-state-controller
+apt-get install ros-kinetic-effort-controllers
+apt-get install ros-kinetic-position-controllers
+```
+---
 More interesting videos can be found on our [Youtube playlist](https://www.youtube.com/playlist?list=PLQFQ6M344AWcVceGyqwvHDmvLtTxphPdQ)
