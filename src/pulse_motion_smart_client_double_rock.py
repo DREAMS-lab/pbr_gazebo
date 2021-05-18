@@ -54,7 +54,7 @@ class SmartClient(object):
 
         rospy.loginfo('pluse_motion_smart_client has been initialized')
 
-        plt.axis([0, 1.2, 0, 1.2])
+        plt.axis([0, 0.6, 0, 0.6])
         plt.xlabel('PGA (g)')
         plt.ylabel('PGV/PGA (s)')
         self.toppling_data = []
@@ -83,20 +83,20 @@ class SmartClient(object):
 
 
     def callback(self, data):
-        model_name = 'rock_box_1_1_2'
+        model_name = 'double_rock_pbr'
         if model_name in data.name:
-            idx = data.name.index('rock_box_1_1_2')
+            idx = data.name.index('double_rock_pbr')
             self.pbr_pose = data.pose[idx]
             self.pbr_twist = data.twist[idx]
 
     def runExperiment(self, A, F):
         # load model
         initial_pose = Pose()
-        initial_pose.position.x = 0
-        initial_pose.position.y = 0
-        initial_pose.position.z = 4
-        file_name = os.path.join(self.pkg_path, "models/rock_models/rock_box_1_1_2/model.sdf")
-        model_name = 'rock_box_1_1_2'
+        initial_pose.position.x = -0.099756
+        initial_pose.position.y = 0.024989
+        initial_pose.position.z = 13.261496
+        file_name = os.path.join(self.pkg_path, "models/rock_models/double_rock_pbr/double_rock_pbr.sdf")
+        model_name = 'double_rock_pbr'
         with open(file_name) as xml_file:
             sdf_f = xml_file.read()
         self.load_client(model_name, sdf_f, '', initial_pose, "world")
@@ -110,7 +110,7 @@ class SmartClient(object):
         rospy.sleep(4.)
 
         # delete model
-        self.delete_client('rock_box_1_1_2')
+        self.delete_client('double_rock_pbr')
 
         # reset shake table
         goal = pbr_gazebo.msg.AFGoal(A=0, F=0)
@@ -120,7 +120,7 @@ class SmartClient(object):
         rospy.sleep(.5)
         
         # delete model
-        #self.delete_client('rock_box_1_1_2')
+        #self.delete_client('double_rock_pbr')
 
         state = self.checkToppled()
         self.logData(A, F, state)
@@ -163,8 +163,8 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGV_2_PGA = np.linspace(0.1, 1.0, 50)
-        PGA = np.linspace(0.2, 1.1, 50)
+        PGV_2_PGA = np.linspace(0.02, 0.5, 5)
+        PGA = np.linspace(0.02, .5, 5)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
         for F in Fs:

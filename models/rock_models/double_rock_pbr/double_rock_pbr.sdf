@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name='double_rock_pbr'>
+      <pose frame=''>0 0 0 0 0 0</pose>
+      <link name='body'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://double_rock_pbr/double_rock_pbr.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://double_rock_pbr/double_rock_pbr.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+				<friction>
+				  <ode>
+					<mu>0.6</mu>
+					<mu2>0.6</mu2>
+				  </ode>
+				  <bullet>
+					<friction>0.60</friction>
+					<friction2>0.60</friction2>
+					<rolling_friction>0.6</rolling_friction>
+				  </bullet>
+				</friction>
+				<contact>
+					<ode>
+						<min_depth>0.001</min_depth>
+					</ode>
+				</contact>
+				<bounce>
+            		<restitution_coefficient>0.9</restitution_coefficient>
+            		<threshold>0.1</threshold>
+          		</bounce>
+			</surface>
+        </collision>
+        <inertial>
+          <mass>1437.596</mass>
+          <pose frame=''>0 0 0 0 0 0</pose>
+          <inertia>
+            <ixx>260.473</ixx>
+            <ixy>-12.88</ixy>
+            <ixz>-83.689</ixz>
+            <iyy>313.424</iyy>
+            <iyz>-26.81</iyz>
+            <izz>134.045</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+</sdf>
+
