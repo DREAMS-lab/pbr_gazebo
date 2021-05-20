@@ -66,6 +66,15 @@ roslaunch pbr_gazebo add_double_rock_pbr_2.launch
 rosrun pbr_gazebo pulse_motion_server.py
 ```
 
+#### Smart client
+[![Video](./doc/double_rock_pbr_shake_table.png)](https://www.youtube.com/watch?v=hs_v9liaiWg&t=3s)
+```buildoutcfg
+roslaunch pbr_gazebo prismatic_large_box.launch
+rosrun pbr_gazebo pulse_motion_server.py
+rosrun pbr_gazebo pulse_motion_smart_client_double_rock.py --yaw 90
+```
+`pulse_motion_smart_client_double_rock.py` has one argument, the initial yaw (degrees) of PBR. 
+
 ### PBRs and Boxes
 PBR and box models can be loaded after the environment has been loaded in Gazebo
 ```

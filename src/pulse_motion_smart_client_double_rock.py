@@ -16,6 +16,12 @@ import numpy as np
 import tf
 from numpy import pi
 import matplotlib.pyplot as plt
+import argparse
+
+
+parser = argparse.ArgumentParser(description='Initial PBR Pose')
+parser.add_argument('--yaw', default=0., type=float, help='yaw (degrees)')
+args = parser.parse_args()
 
 class SmartClient(object):
     def __init__(self):
@@ -49,6 +55,7 @@ class SmartClient(object):
         self.load_client = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
 
         self.pbr_pose = Pose()
+        self.init_yaw = args.yaw/180.*np.pi
         self.pbr_twist = Twist()
         rospy.Subscriber('/gazebo/model_states', ModelStates, self.callback)
 
@@ -95,6 +102,11 @@ class SmartClient(object):
         initial_pose.position.x = -0.099756
         initial_pose.position.y = 0.024989
         initial_pose.position.z = 13.261496
+        quat = tf.transformations.quaternion_from_euler(0, 0, self.init_yaw)
+        initial_pose.orientation.x = quat[0]
+        initial_pose.orientation.y = quat[1]
+        initial_pose.orientation.z = quat[2]
+        initial_pose.orientation.w = quat[3]
         file_name = os.path.join(self.pkg_path, "models/rock_models/double_rock_pbr/double_rock_pbr.sdf")
         model_name = 'double_rock_pbr'
         with open(file_name) as xml_file:
