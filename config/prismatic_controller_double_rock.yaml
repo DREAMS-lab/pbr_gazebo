@@ -2,10 +2,10 @@ prismatic_box_controller:
     # Publish all joint states -----------------------------------
     joint_state_controller:
       type: joint_state_controller/JointStateController
-      publish_rate: 50
+      publish_rate: 200
 
     # Position Controllers ---------------------------------------
     prismatic_joint_controller:
       type: effort_controllers/JointVelocityController
       joint: box_joint
-      pid: {p: 100000000.0, i: 50000000.0, d: 0000.0}
+      pid: {p: 50000000.0, i: 50000000.0, d: 0000.0}
