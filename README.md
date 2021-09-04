@@ -97,6 +97,32 @@ rosrun pbr_gazebo pulse_motion_smart_client.py
 ```
 The lists of displacement amplitudes and frequences need to be defined in pulse_motion_smart_client.py.
 
+## Realistic Shake Table Motion
+```buildoutcfg
+roslaunch pbr_gazebo double_rock.launch
+rosrun pbr_gazebo motion_from_file.py
+roslaunch pbr_gazebo add_double_rock_pbr.launch
+rostopic pub /ground_motion_server/goal pbr_gazebo/AFActionGoal "header:
+  seq: 0
+  stamp:
+    secs: 0
+    nsecs: 0
+  frame_id: ''
+goal_id:
+  stamp:
+    secs: 0
+    nsecs: 0
+  id: ''
+goal:
+  A: 1.0
+  F: 1.0"
+```
+When A*F = 0. the shake table position will be reset. Otherwise (A*F !=0), it will trigger ground motion from a .csv file where desired velocities are defined. 
+
+[![Video](./doc/realistic_motion.png)](https://www.youtube.com/watch?v=DQMvtCtxVjo)
+
+
+
 ---
 ## Install Motion Controller
 ```

@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 from __future__ import print_function
 import rospy
 from std_msgs.msg import Float64
@@ -16,7 +16,8 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Twist
 
 class MotionFromFile(object):
-    def __init__(self, file_name):
+    def __init__(self, file_name, link_name='double_rock::box'):
+        self.link_name = link_name
         rospack = rospkg.RosPack()
         rospack.list()
         pkg_path = rospack.get_path('pbr_gazebo')
@@ -37,13 +38,9 @@ class MotionFromFile(object):
         for i in range(len(times) - 1):
             self.times.append(times[i+1] - times[i])
 
-        # joint state
-        rospy.Subscriber('/gazebo/link_states', LinkStates, self.LinkStatecallback)
-
-
-
-        self.default_vel = 0.0
         # joint state subscriber
+        rospy.Subscriber('/gazebo/link_states', LinkStates, self.LinkStatecallback)
+        self.default_vel = 0.0
         self.x = 0
         rospy.Subscriber("/prismatic_box_controller/joint_states", JointState, self.jointstate_cb)
         self.double_rock_twist_pub = rospy.Publisher('/motion_from_file/double_rock/twist', Twist, queue_size=10)
@@ -106,7 +103,7 @@ class MotionFromFile(object):
         self.x = data.position[0]
 
     def LinkStatecallback(self, data):
-        idx = data.name.index('double_rock::box')
+        idx = data.name.index(self.link_name)
         double_rock_pose = data.pose[idx]
         double_rock_twist = data.twist[idx]
         self.double_rock_twist_pub.publish(double_rock_twist)
@@ -124,7 +121,9 @@ class MotionFromFile(object):
 
 if __name__ == '__main__':
     rospy.init_node('motion_from_file', anonymous=False)
-    mff = MotionFromFile('RSN316.csv')
+    double_rock = 'double_rock::box'
+    shake_table = 'prismatic_large_box::box'
+    mff = MotionFromFile('RSN316.csv', shake_table)
     try:
         rospy.spin()
     except rospy.ROSInterruptException:
