@@ -37,7 +37,6 @@ class MotionFromFile(object):
         self.times = []
         for i in range(len(times) - 1):
             self.times.append(times[i+1] - times[i])
-
         # joint state subscriber
         rospy.Subscriber('/gazebo/link_states', LinkStates, self.LinkStatecallback)
         self.default_vel = 0.0
@@ -88,6 +87,7 @@ class MotionFromFile(object):
             rospy.loginfo('reset completed')
         else:
             step_nm = len(self.times)
+            print(step_nm)
             for j in range(step_nm):
                 self.vel_command = self.vel_commands[j]
                 rospy.sleep(self.times[j])

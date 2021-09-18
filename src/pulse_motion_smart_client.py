@@ -16,6 +16,7 @@ import numpy as np
 import tf
 from numpy import pi
 import matplotlib.pyplot as plt
+from gazebo_msgs.msg import LinkStates
 
 class SmartClient(object):
     def __init__(self):
@@ -47,6 +48,13 @@ class SmartClient(object):
         rospy.wait_for_service('/gazebo/spawn_sdf_model')
         rospy.loginfo('gazebo spawn_sdf_model server is connected')
         self.load_client = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
+
+
+        # joint state subscriber
+        self.link_name = "prismatic_large_box::box"
+        rospy.Subscriber('/gazebo/link_states', LinkStates, self.LinkStatecallback)
+        self.shake_table_twist_pub = rospy.Publisher('/shake_table/twist', Twist, queue_size=10)
+        self.shake_table_pose_pub = rospy.Publisher('/shake_table/pose', Pose, queue_size=10)
 
         self.pbr_pose = Pose()
         self.pbr_twist = Twist()
@@ -82,6 +90,14 @@ class SmartClient(object):
         np.savetxt("toppling_data.csv", nd_data, delimiter=",")
 
 
+    def LinkStatecallback(self, data):
+        idx = data.name.index(self.link_name)
+        double_rock_pose = data.pose[idx]
+        double_rock_twist = data.twist[idx]
+        self.shake_table_twist_pub.publish(double_rock_twist)
+        self.shake_table_pose_pub.publish(double_rock_pose)
+
+
     def callback(self, data):
         model_name = 'rock_box_1_1_2'
         if model_name in data.name:
@@ -94,7 +110,7 @@ class SmartClient(object):
         initial_pose = Pose()
         initial_pose.position.x = 0
         initial_pose.position.y = 0
-        initial_pose.position.z = 4
+        initial_pose.position.z = 13.47
         file_name = os.path.join(self.pkg_path, "models/rock_models/rock_box_1_1_2/model.sdf")
         model_name = 'rock_box_1_1_2'
         with open(file_name) as xml_file:
@@ -163,8 +179,8 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGV_2_PGA = np.linspace(0.1, 1.0, 50)
-        PGA = np.linspace(0.2, 1.1, 50)
+        PGV_2_PGA = np.linspace(0.1, 1.0, 3)
+        PGA = np.linspace(0.2, 1.1, 3)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
         for F in Fs:

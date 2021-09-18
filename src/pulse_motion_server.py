@@ -22,7 +22,7 @@ class PulseMotion(object):
         rospy.Subscriber("/prismatic_box_controller/joint_states", JointState, self.jointstate_cb)
 
         # velocity controller
-        self.Hz = 50
+        self.Hz = 200
         self.vel_pub = rospy.Publisher('/prismatic_box_controller/prismatic_joint_controller/command', Float64, queue_size=10)
         self.vel_command = self.default_vel
         self.vel_thread = Thread(target=self.send_vel, args=())
