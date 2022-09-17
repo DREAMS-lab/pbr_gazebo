@@ -35,6 +35,8 @@ class SmartClient(object):
         rospy.sleep(10.)
         self.delete_client('rock_box_1_1_2')
         """
+        self.rock_model = "rock_box_1_1_2"
+
         rospack = rospkg.RosPack()
         rospack.list()
         self.pkg_path = rospack.get_path('pbr_gazebo')
@@ -51,7 +53,7 @@ class SmartClient(object):
 
 
         # joint state subscriber
-        self.link_name = "prismatic_large_box::box"
+        self.link_name = "prismatic_large_box_2::box"
         rospy.Subscriber('/gazebo/link_states', LinkStates, self.LinkStatecallback)
         self.shake_table_twist_pub = rospy.Publisher('/shake_table/twist', Twist, queue_size=10)
         self.shake_table_pose_pub = rospy.Publisher('/shake_table/pose', Pose, queue_size=10)
@@ -99,9 +101,9 @@ class SmartClient(object):
 
 
     def callback(self, data):
-        model_name = 'rock_box_1_1_2'
+        model_name = self.rock_model
         if model_name in data.name:
-            idx = data.name.index('rock_box_1_1_2')
+            idx = data.name.index(self.rock_model)
             self.pbr_pose = data.pose[idx]
             self.pbr_twist = data.twist[idx]
 
@@ -110,9 +112,13 @@ class SmartClient(object):
         initial_pose = Pose()
         initial_pose.position.x = 0
         initial_pose.position.y = 0
-        initial_pose.position.z = 13.47
-        file_name = os.path.join(self.pkg_path, "models/rock_models/rock_box_1_1_2/model.sdf")
-        model_name = 'rock_box_1_1_2'
+        initial_pose.position.z = 13.47 # 2_1_1 #13 #2_1_1_small #14 # 3_1_1
+        #initial_pose.orientation.x = 0
+        #initial_pose.orientation.y = 0.7071068
+        #initial_pose.orientation.z = 0
+        #initial_pose.orientation.w = 0.7071068
+        file_name = os.path.join(self.pkg_path, "models/rock_models/{rock_model}/model.sdf".format(rock_model=self.rock_model))
+        model_name = self.rock_model
         with open(file_name) as xml_file:
             sdf_f = xml_file.read()
         self.load_client(model_name, sdf_f, '', initial_pose, "world")
@@ -126,7 +132,7 @@ class SmartClient(object):
         rospy.sleep(4.)
 
         # delete model
-        self.delete_client('rock_box_1_1_2')
+        self.delete_client(self.rock_model)
 
         # reset shake table
         goal = pbr_gazebo.msg.AFGoal(A=0, F=0)
@@ -134,9 +140,6 @@ class SmartClient(object):
         self.client.wait_for_result()
         result = self.client.get_result()
         rospy.sleep(.5)
-        
-        # delete model
-        #self.delete_client('rock_box_1_1_2')
 
         state = self.checkToppled()
         self.logData(A, F, state)
@@ -179,8 +182,8 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGV_2_PGA = np.linspace(0.1, 1.0, 3)
-        PGA = np.linspace(0.2, 1.1, 3)
+        PGA = np.linspace(0.2, 1.1, 50)
+        PGV_2_PGA = np.linspace(0.1, 1.0, 50)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
         for F in Fs:

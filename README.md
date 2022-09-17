@@ -66,6 +66,17 @@ roslaunch pbr_gazebo add_double_rock_pbr_2.launch
 rosrun pbr_gazebo pulse_motion_server.py
 ```
 
+### Double Rock Onsite Anisotropy
+![double rock pbr](./doc/double_rock_onsite_anisotropy.png)
+You need to modify the yaw in the robot model `pbr_gazebo/models/double_rock/model.urdf`. In tag `<link name='box'>`, change yaw in radiance as desired orientation. 
+
+For example, if the yaw is modified to 1.0471975511965976 (60 degress), run the following commands to start shake experiments. 
+```buildoutcfg
+roslaunch pbr_gazebo double_rock.launch
+rosrun pbr_gazebo pulse_motion_server.py
+rosrun pbr_gazebo pulse_motion_smart_client_double_rock_on_site.py --yaw 60
+```
+
 #### Smart client
 [![Video](./doc/double_rock_pbr_shake_table.png)](https://www.youtube.com/watch?v=hs_v9liaiWg&t=3s)
 ```buildoutcfg
@@ -100,8 +111,8 @@ The lists of displacement amplitudes and frequences need to be defined in pulse_
 ## Realistic Shake Table Motion
 ```buildoutcfg
 roslaunch pbr_gazebo double_rock.launch
-rosrun pbr_gazebo motion_from_file.py
 roslaunch pbr_gazebo add_double_rock_pbr.launch
+rosrun pbr_gazebo motion_from_file.py
 rostopic pub /ground_motion_server/goal pbr_gazebo/AFActionGoal "header:
   seq: 0
   stamp:

@@ -104,13 +104,13 @@
             <!--mesh>
               <uri>model://granite_dell_terrain/pbr-less-1.dae</uri>
             </mesh-->
-			<mesh filename="package://gazebo_sim_models/models/granite_dell_terrain/pbr-less-1.dae"/>
+			<mesh filename="package://gazebo_sim_models/models/granite_dell/granite_dell.dae"/>
           </geometry>
         </visual>
 
         <collision name='collision'>
           <geometry>
-            <mesh filename="package://gazebo_sim_models/models/granite_dell_terrain/pbr-less-1.dae"/>
+            <mesh filename="package://gazebo_sim_models/models/granite_dell/granite_dell.dae"/>
           </geometry>
         </collision>
 	</link>

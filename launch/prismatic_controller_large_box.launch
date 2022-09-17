@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+	<rosparam file="$(find pbr_gazebo)/config/prismatic_box_controller.yaml" command="load"/>
+	
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/prismatic_box_controller" args="prismatic_joint_controller joint_state_controller"/>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+    	<remap from="/joint_states" to="/prismatic_box_controller/joint_states" />
+  	</node>
+
+</launch>

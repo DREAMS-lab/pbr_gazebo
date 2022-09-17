@@ -94,12 +94,13 @@
 	<link name="box">
         <inertial>
 			<mass value="50000" />
-			<origin xyz="0 0 0" />
+			<origin xyz="0 0 0" rpy="0 0 1.0471975511965976" />
 			<inertia ixx="566666" ixy="0.0" ixz="0.0" iyy="1816666" iyz="0.0" izz="2083333" /> 
 			<!--Ixx = 1/12/m*(y^2+z^2)-->
         </inertial>
 
 		<visual name='visual'>
+          <origin xyz="0 0 0" rpy="0 0 1.0471975511965976" />
           <geometry>
             <!--mesh>
               <uri>model://granite_dell_terrain/pbr-less-1.dae</uri>
@@ -109,7 +110,7 @@
         </visual>
 
         <collision name='collision'>
-		  <origin xyz="0 0 0" />
+		  <origin xyz="0 0 0" rpy="0 0 1.0471975511965976" />
           <surface>
 				<friction>
 				  <ode>

@@ -3,14 +3,14 @@
   <model name='rock_box_1_1_2_small'>
     <link name='link'>
       <inertial>
-        <mass>5.4</mass>
+        <mass>675</mass>
         <inertia>
-          <ixx>0.0225</ixx>
+          <ixx>70.3125</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.0225</iyy>
+          <iyy>70.3125</iyy>
           <iyz>0</iyz>
-          <izz>0.009</izz>
+          <izz>28.125</izz>
         </inertia>
         <pose frame=''>0 0 0 0 -0 0</pose>
       </inertial>
@@ -22,7 +22,7 @@
       <visual name='visual'>
         <geometry>
           <box>
-            <size>0.1 0.1 0.2</size>
+            <size>0.5 0.5 1</size>
           </box>
         </geometry>
         <material>
@@ -48,7 +48,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.1 0.1 0.2</size>
+            <size>0.5 0.5 1</size>
           </box>
         </geometry>
         <surface>
@@ -71,19 +71,19 @@
             </torsional>
           </friction>
           <bounce>
-            <restitution_coefficient>0</restitution_coefficient>
-            <threshold>1e+06</threshold>
+            <restitution_coefficient>0.8</restitution_coefficient>
+            <threshold>0</threshold>
           </bounce>
           <contact>
-            <collide_without_contact>0</collide_without_contact>
+            <collide_without_contact>1</collide_without_contact>
             <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
             <collide_bitmask>1</collide_bitmask>
             <ode>
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1</kd>
-              <max_vel>0.01</max_vel>
+              <kd>0</kd>
+              <max_vel>100</max_vel>
               <min_depth>0</min_depth>
             </ode>
             <bullet>
@@ -92,7 +92,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1</kd>
+              <kd>0</kd>
             </bullet>
           </contact>
         </surface>

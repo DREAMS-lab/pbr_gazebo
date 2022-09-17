@@ -9,7 +9,7 @@
     <param name = "robot_description" command="cat $(find pbr_gazebo)/models/prismatic_large_box/model.urdf"/>
     <node name = "spawn_robot" pkg = "gazebo_ros" type = "spawn_model" args="-file $(find pbr_gazebo)/models/prismatic_large_box/model.urdf -urdf -model prismatic_large_box"/>
 
-    <rosparam file="$(find pbr_gazebo)/config/prismatic_box_controller.yaml" command="load"/>
+    <!--rosparam file="$(find pbr_gazebo)/config/prismatic_box_controller.yaml" command="load"/>
 
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/prismatic_box_controller" args="prismatic_joint_controller joint_state_controller"/>
@@ -17,6 +17,6 @@
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
 	respawn="false" output="screen">
     	<remap from="/joint_states" to="/prismatic_box_controller/joint_states" />
-  	</node>
+  	</node-->
 
 </launch>

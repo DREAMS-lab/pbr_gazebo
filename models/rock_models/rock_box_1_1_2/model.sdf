@@ -56,6 +56,12 @@
               <slip1>0</slip1>
               <slip2>0</slip2>
             </ode>
+            <!--bullet uses ode friction params-->
+			<bullet>
+				<friction>0.6</friction>
+				<friction2>0.6</friction2>
+				<rolling_friction>0.6</rolling_friction>
+			</bullet>
             <torsional>
               <coefficient>1</coefficient>
               <patch_radius>0</patch_radius>
@@ -67,19 +73,21 @@
             </torsional>
           </friction>
           <bounce>
-            <restitution_coefficient>0</restitution_coefficient>
-            <threshold>1e+06</threshold>
+            <restitution_coefficient>0.8</restitution_coefficient>
+            <threshold>0.</threshold>
           </bounce>
           <contact>
-            <collide_without_contact>0</collide_without_contact>
-            <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-            <collide_bitmask>1</collide_bitmask>
+            <collide_without_contact>1</collide_without_contact>
+            <!--collide_without_contact_bitmask>1</collide_without_contact_bitmask-->
+            <!--collide_bitmask>1</collide_bitmask-->
+			<poissons_ratio>0.3</poissons_ratio>
+			<elastic_modulus>0.3</elastic_modulus>
             <ode>
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1</kd>
-              <max_vel>0.01</max_vel>
+              <kd>0</kd>
+              <max_vel>100</max_vel>
               <min_depth>0.000</min_depth>
             </ode>
             <bullet>
@@ -88,7 +96,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1</kd>
+              <kd>0</kd>
             </bullet>
           </contact>
         </surface>
@@ -96,5 +104,6 @@
     </link>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
+
   </model>
 </sdf>
