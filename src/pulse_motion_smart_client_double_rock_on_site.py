@@ -9,6 +9,7 @@ import actionlib
 import os
 import pbr_gazebo.msg
 from gazebo_msgs.msg import ModelStates
+from gazebo_msgs.msg import LinkStates
 from gazebo_msgs.srv import DeleteModel, SpawnModel
 import rospkg
 from geometry_msgs.msg import Point, Pose, Twist
@@ -59,7 +60,7 @@ class SmartClient(object):
         self.pbr_pose = Pose()
         self.init_yaw = args.yaw/180.*np.pi
         self.pbr_twist = Twist()
-        rospy.Subscriber('/gazebo/model_states', ModelStates, self.callback)
+        rospy.Subscriber('/gazebo/link_states', LinkStates, self.callback)
 
         rospy.loginfo('pluse_motion_smart_client has been initialized')
 
@@ -92,11 +93,13 @@ class SmartClient(object):
 
 
     def callback(self, data):
-        model_name = 'double_rock_pbr'
+        model_name = 'double_rock_pbr::body'
         if model_name in data.name:
-            idx = data.name.index('double_rock_pbr')
+            idx = data.name.index('double_rock_pbr::body')
             self.pbr_pose = data.pose[idx]
             self.pbr_twist = data.twist[idx]
+            id = data.name.index('double_rock::box')
+            double_rock_pose = data.pose[id]
             if self.start_recording:
                 pbr_state = (self.pbr_pose.position.x,
                              self.pbr_pose.position.y,
@@ -111,6 +114,9 @@ class SmartClient(object):
                              self.pbr_twist.angular.x,
                              self.pbr_twist.angular.y,
                              self.pbr_twist.angular.z,
+                             double_rock_pose.position.x,
+                             double_rock_pose.position.y,
+                             double_rock_pose.position.z,
                              time.time())
                 self.pbr_states.append(pbr_state)
 

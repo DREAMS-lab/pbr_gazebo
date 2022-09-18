@@ -9,7 +9,7 @@ import rospkg
 
 rospack = rospkg.RosPack()
 pkg_path = rospack.get_path('pbr_gazebo')
-my_data = genfromtxt(pkg_path + '/topple_log/60.0_1.0_0.733333333333.csv', delimiter=',')
+my_data = genfromtxt(pkg_path + '/topple_log/60.0_0.755_0.5.csv', delimiter=',')
 print(my_data.shape)
 
 from mpl_toolkits import mplot3d
@@ -31,7 +31,12 @@ v_z = my_data[:, 9]
 v = np.sqrt(v_x**2 + v_y**2 + v_z**2 )
 
 ax.plot3D(x, y, z, 'gray')
-p = ax.scatter3D(x, y, z, c=v, cmap='Greens');
+p = ax.scatter3D(x, y, z, c=v, cmap='Greens')
+
+x = my_data[:, 13]
+y = my_data[:, 14]
+z = my_data[:, 15]
+ax.plot3D(x, y, z, 'red')
 
 fig.colorbar(p, ax=ax)
 
