@@ -210,7 +210,7 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGV_2_PGA = np.linspace(0.2, 1., 50)
+        PGV_2_PGA = np.linspace(0.02, 1., 50)
         PGA = np.linspace(0.02, 1., 50)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
