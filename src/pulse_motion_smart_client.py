@@ -35,7 +35,7 @@ class SmartClient(object):
         rospy.sleep(10.)
         self.delete_client('rock_box_1_1_2')
         """
-        self.rock_model = "rock_box_1_1_2"
+        self.rock_model = "rock_box_petg"
 
         rospack = rospkg.RosPack()
         rospack.list()
@@ -112,7 +112,7 @@ class SmartClient(object):
         initial_pose = Pose()
         initial_pose.position.x = 0
         initial_pose.position.y = 0
-        initial_pose.position.z = 13.47 # 2_1_1 #13 #2_1_1_small #14 # 3_1_1
+        initial_pose.position.z = 12.524 # wood   #13.47 # 2_1_1 #13 #2_1_1_small #14 # 3_1_1
         #initial_pose.orientation.x = 0
         #initial_pose.orientation.y = 0.7071068
         #initial_pose.orientation.z = 0
@@ -182,8 +182,8 @@ class SmartClient(object):
         return (nd[:, 0].max(), nd[:, 0].min(), nd[:, 1].max(), nd[:, 1].min())
 
     def sampleMotionParam(self):
-        PGA = np.linspace(0.2, 1.1, 50)
-        PGV_2_PGA = np.linspace(0.1, 1.0, 50)
+        PGA = np.linspace(0.01, 1.0, 50)
+        PGV_2_PGA = np.linspace(0.01, 1.0, 50)
         Fs = 1./(2*pi*PGV_2_PGA)
         FA_data = []
         for F in Fs:
